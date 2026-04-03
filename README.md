@@ -37,7 +37,7 @@ Local:
 
 ## Ucretsiz API Yayina Alma (Once yayinla, sonra DB bagla)
 Bu projeyi ucretsiz sekilde yayinlamak icin repository'e `Dockerfile` ve `render.yaml` eklendi.
-Uygulama artik veritabani bilgisi olmadan da acilir (gecici olarak H2 in-memory kullanir).
+`prod` profili su an DB'siz acilis icin H2 in-memory kullanir.
 
 ### 1) Projeyi GitHub'a push et
 - Bu projeyi GitHub repository'ne gonder.
@@ -59,6 +59,7 @@ Deploy tamamlandiktan sonra Render sana bir URL verecek:
   - `DB_URL` (JDBC format: `jdbc:postgresql://...`)
   - `DB_USERNAME`
   - `DB_PASSWORD`
+- Sonra `SPRING_PROFILES_ACTIVE` degerini `prod,prod-postgres` yap.
 - Opsiyonel: Flyway migration acmak istersen `FLYWAY_ENABLED=true` ekle.
 
 ### Notlar
