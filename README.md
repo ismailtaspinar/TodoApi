@@ -1,68 +1,73 @@
-# Todo API (Spring Boot)
-Basit bir Todo REST API projesi.  
-Spring Boot, JPA ve PostgreSQL kullanır.
+# TODO API
+
+Production-ready REST API for todo management, built with Java and Spring Boot.
+
+## Live Demo
+
+- Base URL: `https://todo-api-03jc.onrender.com`
+- Health check example: `GET https://todo-api-03jc.onrender.com/api/v1/todos`
+
+## Project Highlights
+
+- Clean CRUD endpoints for todo operations
+- Layered architecture (Controller, Service, Repository)
+- Input validation with clear API error responses
+- Global exception handling for consistent output
+- Render deployment configuration included (`Dockerfile`, `render.yaml`)
+- Profile-based configuration for flexible environments
+
 ## Tech Stack
+
 - Java 21
 - Spring Boot
 - Spring Data JPA
 - PostgreSQL
+- H2 (fallback profile for quick startup)
 - Maven
-- (Opsiyonel) Flyway
-## Features
-- Todo oluşturma
-- Todo listeleme
-- Tek todo getirme
-- Todo güncelleme
-- Todo silme
-- Validation ve global error handling
-- Pagination / filtering (varsa)
-## API Base URL
-Local:
-`http://localhost:8080`  
-(veya sende hangi port varsa)
-## Endpoints
-- `POST /api/v1/todos`
-- `GET /api/v1/todos`
-- `GET /api/v1/todos/{id}`
-- `PUT /api/v1/todos/{id}`
-- `DELETE /api/v1/todos/{id}`
-## Sample Request (Create Todo)
+
+## API Endpoints
+
+- `POST /api/v1/todos` - Create todo
+- `GET /api/v1/todos` - List todos
+- `GET /api/v1/todos/{id}` - Get single todo
+- `PUT /api/v1/todos/{id}` - Update todo
+- `DELETE /api/v1/todos/{id}` - Delete todo
+
+## Example Request
+
+`POST /api/v1/todos`
+
 ```json
 {
-  "title": "Spring Boot ogren",
-  "description": "Ilk todo kaydi",
+  "title": "Learn Spring Boot",
+  "description": "Build and deploy a REST API",
   "done": false
 }
 ```
 
-## Ucretsiz API Yayina Alma (Once yayinla, sonra DB bagla)
-Bu projeyi ucretsiz sekilde yayinlamak icin repository'e `Dockerfile` ve `render.yaml` eklendi.
-`prod` profili su an DB'siz acilis icin H2 in-memory kullanir.
+## Local Run
 
-### 1) Projeyi GitHub'a push et
-- Bu projeyi GitHub repository'ne gonder.
+```bash
+./mvnw spring-boot:run
+```
 
-### 2) Render'da deploy et
-- [Render](https://render.com) hesabina gir.
-- **New + -> Blueprint** sec ve bu repository'i bagla.
-- Render, otomatik olarak `render.yaml` dosyasini okuyup servisi olusturacak.
-- Bu asamada DB env var'larini girmesen de deploy olur.
-- `SPRING_PROFILES_ACTIVE=prod` zaten `render.yaml` icinde set ediliyor.
+Default local URL:
 
-### 3) API'yi test et
-Deploy tamamlandiktan sonra Render sana bir URL verecek:
-- `GET https://<senin-servisin>.onrender.com/api/v1/todos`
+- `http://localhost:8080`
 
-### 4) Sonra PostgreSQL bagla (Neon)
-- [Neon](https://neon.tech) uzerinde ucretsiz PostgreSQL olustur.
-- Render servisinde Environment kisimina su degiskenleri gir:
-  - `DB_URL` (JDBC format: `jdbc:postgresql://...`)
-  - `DB_USERNAME`
-  - `DB_PASSWORD`
-- Sonra `SPRING_PROFILES_ACTIVE` degerini `prod,prod-postgres` yap.
-- Opsiyonel: Flyway migration acmak istersen `FLYWAY_ENABLED=true` ekle.
+## Deployment
 
-### Notlar
-- Render free planda servis bir sure trafik olmazsa uykuya gecebilir.
-- Ilk isteklerde soguk baslangic sebebiyle kisa bir gecikme olabilir.
-- H2 gecici oldugu icin servis yeniden baslarsa veriler sifirlanir. Kalici veri icin Postgres baglamalisin.
+Application is deployed on Render and can run with:
+
+- `prod` profile (H2-based quick startup)
+- `prod,prod-postgres` profile (PostgreSQL-backed persistent mode)
+
+Render files included in repository root:
+
+- `Dockerfile`
+- `render.yaml`
+
+## Notes
+
+- Free Render instances may sleep after inactivity.
+- First request after sleep can be slower (cold start).
